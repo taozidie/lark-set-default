@@ -49,9 +49,10 @@ function LoadApp() {
 
     const currentField = await table.getField(selectFieldId);
 
-    const off = table.onRecordAdd((event) => { // 监听字段增加事件
+    const off = table.onRecordAdd(async (event) => { // 监听字段增加事件
       console.log('record add', event);
-      if(event.data && event.data.length > 0){
+      // 1
+      if (event.data && event.data.length > 0) {
         for (const recordId of event.data) {
           await currentField.setValue(recordId, "http:www.baidu.com");
         }
@@ -65,7 +66,7 @@ function LoadApp() {
     </div>
     <div style={{ margin: 10 }}>
       <div>设置默认值</div>
-      <Input onChange={setDefaultVal}></Input>
+      <Input onChange={(e)=>setDefaultVal(e.target.value)}></Input>
     </div>
     <div style={{ margin: 10 }}>
       <Button onClick={transform} disabled={!selectFieldId ||!defaultVal }>确认</Button>
